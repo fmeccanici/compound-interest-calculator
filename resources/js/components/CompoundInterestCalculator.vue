@@ -1,99 +1,45 @@
 <template>
-    <div>
-        <label for="currency">Currency:</label>
-        <div id="currency" class="radio-switch">
-            <input name="currency" id="currency_1" type="radio" checked value="$">
-            <label @click="selectedCurrency = '$'" for="currency_1">$</label>
+    <div class="bg-slate-200 p-3 m-3 w-1/3 rounded-lg border-solid border-2 border-gray-300">
 
-            <input name="currency" id="currency_2" type="radio" value="€">
-            <label @click="selectedCurrency = '€'" for="currency_2">€</label>
+        <currency-switch :currencies="['€', '$', '£']"></currency-switch>
 
-            <input name="currency" id="currency_3" type="radio" value="£">
-            <label @click="selectedCurrency = '£'" for="currency_3">£</label>
+        <initial-balance></initial-balance>
+
+        <div class="flex">
+            <interest-rate></interest-rate>
+            <years-and-months></years-and-months>
         </div>
 
-        <label for="initial_balance">Initial balance:</label>
-        <div id="initial_balance" class="initial_balance">
-            <label for="initial_balance" x-text="selectedCurrency"></label>
-            <input
-                required
-                v-model="initialBalance"
-                name="initial_balance"
-                id="initial_balance"
-                type="text">
-        </div>
+        <compound-frequency></compound-frequency>
 
-        <label for="interest_rate">Interest rate:</label>
-        <div id="interest_rate" class="interest_rate">
-            <input
-                required
-                v-model="interestRateInPercentages"
-                name="interest_rate"
-                id="interest_rate"
-                type="text">
-        </div>
-        <div class="years_and_months">
-            <div class="years">
-                <label for="years">Years:</label>
-                <input
-                    required
-                    v-model="amountOfYears"
-                    type="text"
-                    placeholder="0">
-            </div>
-            <div class="months">
-                <label for="months">Months:</label>
-                <input
-                    v-model="amountOfMonths"
-                    type="text"
-                    placeholder="0">
-            </div>
-        </div>
+        <deposits-and-withdrawals></deposits-and-withdrawals>
 
-        <label for="months">Compound frequency:</label>
-        <select
-            v-model="compoundInterval"
-            class="compound_interval"
-            name="compound_interval"
-            id="compound_interval">
-            <option value="yearly">Yearly (1/yr)</option>
-            <option value="quarterly">Quarterly (4/yr)</option>
-            <option value="monthly">Monthly (12/yr)</option>
-            <option value="daily">Daily (365/yr)</option>
-        </select>
+        <button
 
-        <button @click="calculateTotalMoney();">
+            @click="calculateTotalMoney()"
+        >
             Calculate
         </button>
         <input
             v-model="totalMoney"
             type="text"
         >
-        <label for="">Deposits:</label>
-        <input
-            v-model="depositAmount"
-            type="text"
-        >
-        <label for="months">Deposit frequency:</label>
-        <select
-            v-model="depositInterval"
-            class="deposit_interval"
-            name="deposit_interval"
-            id="deposit_interval">
-            <option value="yearly">Yearly</option>
-            <option value="quarterly">Quarterly</option>
-            <option value="monthly">Monthly</option>
-            <option value="daily">Daily</option>
-        </select>
+
     </div>
 </template>
 
 <script>
+import CurrencyRadioButtons from "./CurrencySwitch.vue";
+import InitialBalance from "./InitialBalance.vue";
+
 export default {
     name: "CompoundInterestCalculator",
+    components: {
+        CurrencyRadioButtons,
+        InitialBalance
+    },
     data () {
         return {
-            selectedCurrency : '$',
             initialBalance : 100,
             interestRateInPercentages : 4,
             amountOfYears: 10,

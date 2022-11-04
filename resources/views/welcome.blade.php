@@ -10,7 +10,7 @@
     </head>
     <body>
         <main id="app">
-
+            <compound-interest-calculator></compound-interest-calculator>
         </main>
     </body>
 </html>
