@@ -1,5 +1,6 @@
-import calculator from './calculator';
+import '../css/app.css';
+import {createApp} from 'vue'
 
-document.addEventListener('alpine:init', () => {
-    Alpine.data('calculator', () => calculator);
-});
+import CompoundInterestCalculator from './components/CompoundInterestCalculator.vue'
+
+createApp(CompoundInterestCalculator).mount("#app")
