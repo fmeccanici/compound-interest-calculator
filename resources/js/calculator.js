@@ -1,12 +1,12 @@
 export default {
     selectedCurrency : '$',
-    initialBalance : 0,
-    interestRateInPercentages : 6,
-    amountOfYears: 16,
+    initialBalance : 100,
+    interestRateInPercentages : 4,
+    amountOfYears: 10,
     amountOfMonths: 0,
     compoundInterval: 'yearly',
     totalMoney: null,
-    depositAmount : 0,
+    depositAmount : 100,
     depositInterval: 'yearly',
 
     calculateTotalMoney() {
@@ -14,11 +14,9 @@ export default {
         let interestRate = this.interestRateInPercentages / 100;
         let totalMoneyWithoutDeposits = this.initialBalance * Math.pow((1 + interestRate / this.totalCompoundsPerYear), this.totalCompoundTime);
 
-
-        let pmt = this.depositAmount * this.totalAmountOfDepositsPerYear;
         let compound = Math.pow((1 + interestRate / this.totalCompoundsPerYear), this.totalCompoundTime);
-        let totalMoneyWithDeposits = pmt * (compound - 1) / interestRate;
 
+        let totalMoneyWithDeposits = this.totalAmountOfDepositsPerYear * (compound - 1) / interestRate;
         this.totalMoney = Math.round((totalMoneyWithoutDeposits + totalMoneyWithDeposits) * 100 ) / 100;
         },
     get totalCompoundTime() {
@@ -44,13 +42,13 @@ export default {
         if (this.depositInterval === 'yearly')
         {
             return this.depositAmount;
-        } else if (this.compoundInterval === 'monthly')
+        } else if (this.depositInterval === 'monthly')
         {
             return this.depositAmount * 12;
-        } else if (this.compoundInterval === 'quarterly')
+        } else if (this.depositInterval === 'quarterly')
         {
             return this.depositAmount * 4;
-        } else if (this.compoundInterval === 'daily')
+        } else if (this.depositInterval === 'daily')
         {
             return this.depositAmount * 365;
         }

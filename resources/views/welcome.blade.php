@@ -7,6 +7,7 @@
         <title>Compound Interest Calculator</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     </head>
     <body>
         <main x-data="calculator">
@@ -60,7 +61,7 @@
                     </div>
                 </div>
 
-                <label for="months">Compound interval:</label>
+                <label for="months">Compound frequency:</label>
                 <select
                     x-model="compoundInterval"
                     class="compound_interval"
@@ -84,7 +85,7 @@
                     x-model="depositAmount"
                     type="text"
                 >
-            <label for="months">Compound interval:</label>
+            <label for="months">Deposit frequency:</label>
             <select
                 x-model="depositInterval"
                 class="deposit_interval"
@@ -100,3 +101,4 @@
 
     </body>
 </html>
+
