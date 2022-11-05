@@ -1,21 +1,30 @@
 <template>
     <div class="bg-slate-200 p-3 m-3 w-1/3 rounded-lg border-solid border-2 border-gray-300">
 
-        <currency-switch :currencies="['€', '$', '£']"></currency-switch>
+        <currency-switch
+            class="mb-2"
+            :currencies="['€', '$', '£']"
+        ></currency-switch>
 
-        <initial-balance></initial-balance>
+        <initial-balance
+            :initial-balance="this.$store.state.initialBalance"
+            :selectedCurrency="this.$store.state.selectedCurrency"
+            class="mb-2"
+        ></initial-balance>
 
-        <div class="flex">
-            <interest-rate></interest-rate>
+        <div class="flex mb-2">
+            <interest-rate
+                v-on:interest-rate-update="onInterestRateUpdate"
+            ></interest-rate>
+
             <years-and-months></years-and-months>
         </div>
 
-        <compound-frequency></compound-frequency>
+        <compound-frequency class="mb-2"></compound-frequency>
 
         <deposits-and-withdrawals></deposits-and-withdrawals>
 
         <button
-
             @click="calculateTotalMoney()"
         >
             Calculate
@@ -29,13 +38,13 @@
 </template>
 
 <script>
-import CurrencyRadioButtons from "./CurrencySwitch.vue";
+import CurrencySwitch from "./CurrencySwitch.vue";
 import InitialBalance from "./InitialBalance.vue";
 
 export default {
     name: "CompoundInterestCalculator",
     components: {
-        CurrencyRadioButtons,
+        CurrencySwitch,
         InitialBalance
     },
     data () {
@@ -95,7 +104,16 @@ export default {
             {
                 return this.depositAmount * 365;
             }
-        }
+        },
+        onInitialBalanceUpdate(initialBalance)
+        {
+            this.initialBalance = initialBalance;
+        },
+        onInterestRateUpdate(interestRate)
+        {
+            console.log(interestRate);
+            // this.interestRateInPercentages = interestRate;
+        },
     }
 
 }

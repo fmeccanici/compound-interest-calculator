@@ -1,9 +1,14 @@
 <template>
-    <div>
-        <label for="months">Compound frequency:</label>
+    <div class="flex flex-col">
+        <label
+            class="font-bold text-sm"
+            for="months"
+        >
+            Compound frequency
+        </label>
         <select
             v-model="compoundInterval"
-            class="compound_interval"
+            class="w-1/4 p-1 rounded-lg"
             name="compound_interval"
             id="compound_interval">
             <option value="yearly">Yearly (1/yr)</option>

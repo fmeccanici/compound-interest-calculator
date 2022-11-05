@@ -1,6 +1,7 @@
 import './bootstrap';
 import '../css/app.css'
 import { createApp } from 'vue'
+import { createStore } from 'vuex'
 
 import CompoundInterestCalculator from './components/CompoundInterestCalculator.vue'
 import CurrencySwitch from "./components/CurrencySwitch.vue";
@@ -16,6 +17,29 @@ import CompoundFrequency from "./components/CompoundFrequency.vue";
 import DepositsAndWithdrawals from "./components/DepositsAndWithdrawals.vue";
 
 library.add(faPercent)
+
+const store = createStore({
+    state () {
+        return {
+            selectedCurrency: '€',
+            initialBalance: null,
+            interestRateInPercentages: null
+        }
+    },
+    mutations: {
+        setSelectedCurrency (state, currency) {
+            state.selectedCurrency = currency;
+        },
+        setInitialBalance(state, initialBalance) {
+            state.initialBalance = initialBalance;
+        },
+        setInterestRateInPercentages(state, interestRateInPercentages)
+        {
+            state.interestRateInPercentages = interestRateInPercentages;
+        }
+    }
+})
+
 const app = createApp(CompoundInterestCalculator);
 
 app.component('currency-switch', CurrencySwitch);
@@ -26,5 +50,6 @@ app.component('years-and-months', YearsAndMonths);
 app.component('compound-frequency', CompoundFrequency);
 app.component('deposits-and-withdrawals', DepositsAndWithdrawals);
 app.component('font-awesome-icon', FontAwesomeIcon)
+app.use(store);
 
 app.mount('#app');

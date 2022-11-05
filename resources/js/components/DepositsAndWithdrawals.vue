@@ -1,21 +1,30 @@
 <template>
-    <div>
-        <label for="">Deposits:</label>
-        <input
-            v-model="depositAmount"
-            type="text"
-        >
-        <label for="months">Deposit frequency:</label>
-        <select
-            v-model="depositInterval"
-            class="deposit_interval"
-            name="deposit_interval"
-            id="deposit_interval">
-            <option value="yearly">Yearly</option>
-            <option value="quarterly">Quarterly</option>
-            <option value="monthly">Monthly</option>
-            <option value="daily">Daily</option>
-        </select>
+    <div class="flex">
+        <div class="flex flex-col">
+            <label
+                for="deposit_amount">
+                Deposits
+            </label>
+            <input
+                class="p-1 rounded-lg"
+                name="deposit_amount"
+                v-model="depositAmount"
+                type="text"
+            >
+        </div>
+        <div class="flex flex-col">
+            <label for="months">Deposit frequency</label>
+            <select
+                v-model="depositFrequency"
+                class="p-1 rounded-lg"
+                name="deposit_frequency"
+                id="deposit_frequency">
+                <option value="yearly">Yearly</option>
+                <option value="quarterly">Quarterly</option>
+                <option value="monthly">Monthly</option>
+                <option value="daily">Daily</option>
+            </select>
+        </div>
     </div>
 </template>
 
@@ -25,7 +34,7 @@ export default {
     data() {
         return {
             depositAmount: null,
-            depositInterval: null
+            depositFrequency: null
         }
     }
 }

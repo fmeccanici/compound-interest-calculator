@@ -29,12 +29,7 @@
 <script>
 export default {
     name: "InitialBalance",
-    data() {
-        return {
-            initialBalance: null,
-            selectedCurrency: '€'
-        }
-    }
+    props: ['selectedCurrency', 'initialBalance'],
 }
 </script>
 

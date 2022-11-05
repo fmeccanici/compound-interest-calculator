@@ -17,6 +17,7 @@
                 name="interest_rate"
                 id="interest_rate"
                 type="text"
+                @input="handleInterestRateInPercentagesChange"
             >
                 <font-awesome-icon
                     class="ml-2 text-2xl"
@@ -33,7 +34,14 @@ export default {
         return {
             interestRateInPercentages : null
         }
+    },
+    methods: {
+        handleInterestRateInPercentagesChange(event) {
+            console.log('check2');
+            this.$emit('interest-rate-update', this.interestRateInPercentages);
+        }
     }
+
 }
 </script>
 

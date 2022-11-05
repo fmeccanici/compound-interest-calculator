@@ -18,7 +18,7 @@
                 @selected="onRadioButtonSelected"
                 :index="index"
                 :amountOfCurrencies="currencies.length"
-            >
+              >
             </currency-radio-button>
         </div>
     </div>
@@ -37,6 +37,7 @@ export default {
     methods: {
         onRadioButtonSelected(currency) {
             this.selectedCurrency = currency;
+            this.$store.commit('setSelectedCurrency', currency)
         }
     }
 
