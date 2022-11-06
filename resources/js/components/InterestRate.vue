@@ -10,34 +10,36 @@
             id="interest_rate"
             class="flex items-center"
         >
-            <input
-                class="p-1 rounded-lg border-solid border-2 border-gray-200 w-1/2"
-                required
-                v-model="interestRateInPercentages"
-                name="interest_rate"
-                id="interest_rate"
-                type="text"
-                @input="handleInterestRateInPercentagesChange"
+            <input-field
+                :value="interestRateInPercentages"
+                class="p-1 rounded-lg border-solid border-2 border-gray-200"
+                required="true"
+                @input-update="handleInterestRateInPercentagesChange"
             >
-                <font-awesome-icon
-                    class="ml-2 text-2xl"
-                    icon="fa-solid fa-percent"
-                />
+            </input-field>
+            <font-awesome-icon
+                class="ml-2 text-2xl"
+                icon="fa-solid fa-percent"
+            />
         </div>
     </div>
 </template>
 
 <script>
+import InputField from './InputField.vue';
+
 export default {
     name: "InterestRate",
+    components: {
+        InputField
+    },
     data() {
         return {
-            interestRateInPercentages : null
+            interestRateInPercentages : 7
         }
     },
     methods: {
         handleInterestRateInPercentagesChange(event) {
-            console.log('check2');
             this.$emit('interest-rate-update', this.interestRateInPercentages);
         }
     }

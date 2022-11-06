@@ -37,7 +37,7 @@ export default {
     methods: {
         onRadioButtonSelected(currency) {
             this.selectedCurrency = currency;
-            this.$store.commit('setSelectedCurrency', currency)
+            this.$emit('selected-currency-update', this.selectedCurrency)
         }
     }
 

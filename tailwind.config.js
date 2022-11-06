@@ -1,4 +1,5 @@
 module.exports = {
+
     content: [
         './resources/**/*.blade.php',
         './resources/**/*.vue',
@@ -8,9 +9,16 @@ module.exports = {
             colors: {
                 'midnight-blue' : '#2C3E50',
                 'wet-asphalt' : '#34495E',
-                'amethyst' : '#9B59B6'
+                'amethyst' : '#9B59B6',
+                'primary' : '#2C3E50',
+                'secondary' : '#9B59B6',
             }
         },
     },
     plugins: [],
+    variants: {
+        extend: {
+            border: ['focus'],
+        }
+    },
 }

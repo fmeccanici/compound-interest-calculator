@@ -1,29 +1,26 @@
 <template>
-    <div class="flex">
+    <div class="flex flex-col">
         <div class="flex flex-col">
             <label
+                class="font-bold text-sm"
                 for="deposit_amount">
                 Deposits
             </label>
-            <input
-                class="p-1 rounded-lg"
-                name="deposit_amount"
-                v-model="depositAmount"
+            <input-field
+                required="false"
                 type="text"
+                @input-update="handleDepositAmountUpdate"
             >
+
+            </input-field>
         </div>
-        <div class="flex flex-col">
-            <label for="months">Deposit frequency</label>
-            <select
-                v-model="depositFrequency"
-                class="p-1 rounded-lg"
-                name="deposit_frequency"
-                id="deposit_frequency">
-                <option value="yearly">Yearly</option>
-                <option value="quarterly">Quarterly</option>
-                <option value="monthly">Monthly</option>
-                <option value="daily">Daily</option>
-            </select>
+        <div class="flex flex-col mt-2">
+            <label for="months" class="font-bold text-sm">Deposit frequency</label>
+            <input-field
+                type="select"
+                :select-values="['Yearly', 'Quarterly', 'Monthly', 'Daily']"
+                @input-update="handleDepositFrequencyUpdate"
+            ></input-field>
         </div>
     </div>
 </template>
@@ -31,10 +28,19 @@
 <script>
 export default {
     name: "DepositsAndWithdrawals",
+    emits: ['deposit-amount-update', 'deposit-frequency-update'],
     data() {
         return {
             depositAmount: null,
             depositFrequency: null
+        }
+    },
+    methods: {
+        handleDepositFrequencyUpdate(depositFrequency) {
+            this.$emit('deposit-frequency-update', depositFrequency);
+        },
+        handleDepositAmountUpdate(depositAmount) {
+            this.$emit('deposit-amount-update', depositAmount);
         }
     }
 }

@@ -1,62 +1,95 @@
 <template>
-    <div class="bg-slate-200 p-3 m-3 w-1/3 rounded-lg border-solid border-2 border-gray-300">
+    <div class="grid grid-cols-4 bg-slate-200 p-3 m-3 rounded-lg border-solid border-2 border-gray-300">
 
         <currency-switch
-            class="mb-2"
+            class="col-span-4"
             :currencies="['€', '$', '£']"
+            @selected-currency-update="onSelectedCurrencyUpdate"
         ></currency-switch>
 
-        <initial-balance
-            :initial-balance="this.$store.state.initialBalance"
-            :selectedCurrency="this.$store.state.selectedCurrency"
-            class="mb-2"
-        ></initial-balance>
+        <money-field
+            title="Initial balance"
+            :currency="selectedCurrency"
+            :amount="initialBalance"
+            @amount-update="onInitialBalanceUpdate"
+            class="col-span-4 mt-10"
+        ></money-field>
 
-        <div class="flex mb-2">
-            <interest-rate
-                v-on:interest-rate-update="onInterestRateUpdate"
-            ></interest-rate>
 
-            <years-and-months></years-and-months>
-        </div>
+        <interest-rate
+            class="col-span-4 mt-2"
+            @interest-rate-update="onInterestRateUpdate"
+        ></interest-rate>
 
-        <compound-frequency class="mb-2"></compound-frequency>
+        <years-and-months
+            class="col-span-3 mt-2"
+            @amount-of-years-update="onAmountOfYearsUpdate"
+            @amount-of-months-update="onAmountOfMonthsUpdate"
+        >
+        </years-and-months>
 
-        <deposits-and-withdrawals></deposits-and-withdrawals>
+        <compound-frequency
+            @compound-frequency-update="onCompoundFrequencyUpdate"
+            class="mb-2 col-span-3 mt-2"></compound-frequency>
+
+        <deposits-and-withdrawals
+            @deposit-amount-update="onDepositAmountUpdate"
+            @deposit-frequency-update="onDepositFrequencyUpdate"
+            class="col-span-3"
+        ></deposits-and-withdrawals>
 
         <button
+            class="col-span-4 w-full bg-primary rounded-lg mt-5 mb-5 text-white"
             @click="calculateTotalMoney()"
         >
             Calculate
         </button>
-        <input
-            v-model="totalMoney"
-            type="text"
-        >
+
+        <money-field
+            class="col-span-4 mb-2"
+            :amount="totalMoney"
+            title="Total money"
+            :currency="selectedCurrency"
+        ></money-field>
+
+        <money-field
+            class="col-span-4 mb-2"
+            :amount="investedMoney"
+            title="Invested money"
+            :currency="selectedCurrency"
+        ></money-field>
+
+        <money-field
+            class="col-span-4 "
+            :amount="interestEarned"
+            title="Interest earned"
+            :currency="selectedCurrency"
+        ></money-field>
 
     </div>
 </template>
 
 <script>
 import CurrencySwitch from "./CurrencySwitch.vue";
-import InitialBalance from "./InitialBalance.vue";
+import MoneyField from "./MoneyField.vue"
 
 export default {
     name: "CompoundInterestCalculator",
     components: {
         CurrencySwitch,
-        InitialBalance
+        MoneyField
     },
     data () {
         return {
-            initialBalance : 100,
-            interestRateInPercentages : 4,
-            amountOfYears: 10,
+            initialBalance : 1000,
+            interestRateInPercentages : 7,
+            amountOfYears: 20,
             amountOfMonths: 0,
             compoundInterval: 'yearly',
             totalMoney: null,
-            depositAmount : 100,
-            depositInterval: 'yearly',
+            depositAmount : null,
+            depositFrequency : 'yearly',
+            selectedCurrency : '€'
         }
     },
     methods: {
@@ -65,11 +98,51 @@ export default {
             let interestRate = this.interestRateInPercentages / 100;
             let totalMoneyWithoutDeposits = this.initialBalance * Math.pow((1 + interestRate / this.totalCompoundsPerYear), this.totalCompoundTime);
 
-            let compound = Math.pow((1 + interestRate / this.totalCompoundsPerYear), this.totalCompoundTime);
+            if (this.withDeposits)
+            {
+                let compound = Math.pow((1 + interestRate / this.totalCompoundsPerYear), this.totalCompoundTime);
 
-            let totalMoneyWithDeposits = this.totalAmountOfDepositsPerYear * (compound - 1) / interestRate;
-            this.totalMoney = Math.round((totalMoneyWithoutDeposits + totalMoneyWithDeposits) * 100 ) / 100;
+                let totalMoneyWithDeposits = this.totalAmountOfDepositsPerYear * (compound - 1) / interestRate;
+
+                this.totalMoney = totalMoneyWithoutDeposits + totalMoneyWithDeposits;
+            } else {
+                this.totalMoney = totalMoneyWithoutDeposits;
+            }
+
+            this.totalMoney = Math.round(this.totalMoney * 100) / 100;
         },
+        onInitialBalanceUpdate(initialBalance)
+        {
+            this.initialBalance = initialBalance;
+        },
+        onInterestRateUpdate(interestRate)
+        {
+            this.interestRateInPercentages = interestRate;
+        },
+        onSelectedCurrencyUpdate(currency)
+        {
+            this.selectedCurrency = currency;
+        },
+        onAmountOfYearsUpdate(years)
+        {
+            this.amountOfYears = years;
+        },
+        onAmountOfMonthsUpdate(months)
+        {
+            this.amountOfMonths = months;
+        },
+        onCompoundFrequencyUpdate(compoundFrequency)
+        {
+            this.compoundInterval = compoundFrequency;
+        },
+        onDepositAmountUpdate(depositAmount)
+        {
+            this.depositAmount = depositAmount;
+        },
+        onDepositFrequencyUpdate(depositFrequency)
+        {
+            this.depositFrequency = depositFrequency;
+        }
     },
     computed: {
         totalCompoundTime() {
@@ -91,29 +164,39 @@ export default {
             }
         },
         totalAmountOfDepositsPerYear() {
-            if (this.depositInterval === 'yearly')
+            if (this.depositFrequency  === 'yearly')
             {
                 return this.depositAmount;
-            } else if (this.depositInterval === 'monthly')
+            } else if (this.depositFrequency  === 'monthly')
             {
                 return this.depositAmount * 12;
-            } else if (this.depositInterval === 'quarterly')
+            } else if (this.depositFrequency  === 'quarterly')
             {
                 return this.depositAmount * 4;
-            } else if (this.depositInterval === 'daily')
+            } else if (this.depositFrequency  === 'daily')
             {
                 return this.depositAmount * 365;
             }
         },
-        onInitialBalanceUpdate(initialBalance)
-        {
-            this.initialBalance = initialBalance;
+        withDeposits() {
+            return this.depositFrequency !== null && this.depositAmount !== null;
         },
-        onInterestRateUpdate(interestRate)
-        {
-            console.log(interestRate);
-            // this.interestRateInPercentages = interestRate;
+        investedMoney() {
+            if (this.withDeposits)
+            {
+                return this.initialBalance + this.totalAmountOfDepositsPerYear * this.amountOfYears
+            }
+
+            return this.initialBalance;
         },
+        interestEarned() {
+            if (this.totalMoney)
+            {
+                return this.totalMoney - this.investedMoney;
+            }
+
+            return null;
+        }
     }
 
 }

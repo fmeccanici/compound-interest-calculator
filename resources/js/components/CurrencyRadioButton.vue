@@ -12,8 +12,8 @@
         <label
             for="currency"
             @click="this.select"
-            class="cursor-pointer pt-2 pb-2 pr-4 pl-4 bg-gray-200 border-solid border-gray-300 border-l-2 border-t-2 border-b-2"
-            :class="{ 'bg-blue-300' : selected, 'rounded-l-lg' : this.index === 0, 'rounded-r-lg border-r-2' : this.index + 1 === this.amountOfCurrencies }"
+            class="cursor-pointer pt-2 pb-2 pr-4 pl-4 bg-white border-solid border-gray-300 border-l-2 border-t-2 border-b-2"
+            :class="{ 'bg-midnight-blue text-white' : selected, 'rounded-l-lg' : this.index === 0, 'rounded-r-lg border-r-2' : this.index + 1 === this.amountOfCurrencies }"
         >
             {{ currency }}
         </label>
