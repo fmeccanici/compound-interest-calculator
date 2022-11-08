@@ -1,28 +1,5 @@
 <template>
-    <div>
-        <label
-            class="font-bold text-sm"
-            for="interest_rate"
-        >
-            Interest rate
-        </label>
-        <div
-            id="interest_rate"
-            class="flex items-center"
-        >
-            <input-field
-                :value="interestRateInPercentages"
-                class="p-1 rounded-lg border-solid border-2 border-gray-200"
-                required="true"
-                @input-update="handleInterestRateInPercentagesChange"
-            >
-            </input-field>
-            <font-awesome-icon
-                class="ml-2 text-2xl"
-                icon="fa-solid fa-percent"
-            />
-        </div>
-    </div>
+    <input-field-leading-add-on label="Interest rate" type="text" name="money" id="money" add-on="%" :value="interestRateInPercentages" @input="handleInterestRateInPercentagesChange"></input-field-leading-add-on>
 </template>
 
 <script>

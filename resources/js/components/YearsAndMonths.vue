@@ -1,13 +1,8 @@
 <template>
-    <div class="flex justify-between">
+    <div class="flex justify-left space-x-10">
         <div class="flex flex-col">
-            <label
-                class="font-bold text-sm"
-                for="years"
-            >
-                Years
-            </label>
             <input-field
+                label="Years"
                 :value="amountOfYears"
                 required="true"
                 type="text"
@@ -15,13 +10,9 @@
             ></input-field>
         </div>
         <div class="flex flex-col">
-            <label
-                class="font-bold text-sm"
-                for="months"
-            >
-                Months
-            </label>
+
             <input-field
+                label="Months"
                 :value="amountOfMonths"
                 required="true"
                 type="text"

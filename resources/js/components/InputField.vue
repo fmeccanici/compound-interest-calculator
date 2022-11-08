@@ -1,28 +1,37 @@
 <template>
-    <input v-if="type !== 'select'"
-        class="p-1 rounded-lg border-gray-300 border-2 focus:border-primary focus:outline-none"
-        :class="class"
-        :type="type"
-        :required="required"
-        v-model="value"
-        @input="handleInputUpdate"
-    >
+    <div v-if="type !== 'select'" class="mt-2">
+        <label :for="name" class="block text-sm font-medium text-gray-700">{{ label }}</label>
+        <div class="mt-1">
+            <input
+                :type="type"
+                :name="name"
+                :id="id"
+                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+                :placeholder="placeholder"
+                v-model="value"
+                @input="handleInputUpdate"
+            >
+        </div>
+    </div>
 
-    <select
-        class="p-1 rounded-lg border-gray-300 border-2 focus:border-primary focus:outline-none"
-        @input="handleSelectInputUpdate"
-        v-if="type === 'select'"
-    >
+    <div v-if="type === 'select'" class="mt-2">
+        <label :for="name" class="block text-sm font-medium text-gray-700">{{ label }}</label>
+        <select
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+            @input="handleSelectInputUpdate"
+        >
 
-        <option v-for="selectValue in selectValues" :value="selectValue.toLowerCase()"> {{ selectValue }}</option>
-    </select>
+            <option v-for="selectValue in selectValues" :value="selectValue.toLowerCase()"> {{ selectValue }}</option>
+        </select>
+    </div>
+
 </template>
 
 <script>
 export default {
     name: "InputField",
     emits: ['input-update'],
-    props: ['type', 'class', 'required', 'value', 'selectValues'],
+    props: ['type', 'class', 'required', 'value', 'selectValues', 'placeholder', 'name', 'id', 'label'],
     methods: {
         handleInputUpdate(event) {
             this.$emit('input-update', event.target.value);

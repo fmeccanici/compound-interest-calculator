@@ -1,12 +1,7 @@
 <template>
     <div class="flex flex-col">
-        <label
-            class="font-bold text-sm"
-            for="months"
-        >
-            Compound frequency
-        </label>
         <input-field
+            label="Compound frequency"
             type="select"
             :select-values="['Yearly (1/yr)', 'Quarterly (4/yr)', 'Monthly (12/yr)', 'Daily (365/yr)']"
             @input-update="handleCompoundFrequencyUpdate"

@@ -1,37 +1,14 @@
 <template>
-    <div class="flex flex-col">
-        <label
-            class="font-bold text-sm"
-            for="money"
-        >
-            {{ title }}
-        </label>
-        <div
-            id="money"
-        >
-            <label
-                class="p-1"
-                for="money"
-                v-text="currency"
-            ></label>
-            <input-field
-                :value="amount"
-                required="true"
-                @input-update="handleAmountUpdate"
-            >
-
-            </input-field>
-        </div>
-    </div>
+    <input-field-leading-add-on :label="title" type="text" name="money" id="money" :add-on="currency" :value="amount" @input="handleAmountUpdate"></input-field-leading-add-on>
 </template>
 
 <script>
-import InputField from './InputField.vue';
+import InputFieldLeadingAddOn from './InputFieldLeadingAddOn.vue';
 
 export default {
     name: "MoneyField",
     components: {
-        InputField
+        InputFieldLeadingAddOn
     },
     props: ['currency', 'title', 'amount'],
     methods: {

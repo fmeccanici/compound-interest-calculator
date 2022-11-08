@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import CompoundFrequency from "./components/CompoundFrequency.vue";
 import DepositsAndWithdrawals from "./components/DepositsAndWithdrawals.vue";
 import InputField from "./components/InputField.vue";
+import InputFieldLeadingAddOn from "./components/InputFieldLeadingAddOn.vue";
 
 library.add(faPercent)
 
@@ -29,6 +30,7 @@ app.component('years-and-months', YearsAndMonths);
 app.component('compound-frequency', CompoundFrequency);
 app.component('deposits-and-withdrawals', DepositsAndWithdrawals);
 app.component('input-field', InputField);
+app.component('input-field-leading-add-on', InputFieldLeadingAddOn);
 app.component('font-awesome-icon', FontAwesomeIcon)
 
 app.mount('#app');

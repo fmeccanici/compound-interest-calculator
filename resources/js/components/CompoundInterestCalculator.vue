@@ -1,70 +1,58 @@
 <template>
-    <div class="grid grid-cols-4 bg-slate-200 p-3 m-3 rounded-lg border-solid border-2 border-gray-300">
+    <div class="pl-5 pr-5 pt-5 m-3 rounded-lg border-solid border border-gray-300">
 
-        <currency-switch
-            class="col-span-4"
-            :currencies="['€', '$', '£']"
-            @selected-currency-update="onSelectedCurrencyUpdate"
-        ></currency-switch>
+        <div class="space-y-8 divide-y divide-gray-200">
+            <div class="space-y-8 divide-y divide-gray-200">
+                <div>
+                    <currency-switch
+                        class="col-span-4 mb-3"
+                        :currencies="['€', '$', '£']"
+                        @selected-currency-update="onSelectedCurrencyUpdate"
+                    ></currency-switch>
+                    <money-field
+                        title="Initial balance"
+                        :currency="selectedCurrency"
+                        :amount="initialBalance"
+                        @amount-update="onInitialBalanceUpdate"
+                    ></money-field>
+                    <interest-rate
+                        class="col-span-2"
+                        @interest-rate-update="onInterestRateUpdate"
+                    ></interest-rate>
+                    <years-and-months
+                        class="col-span-3 mt-2"
+                        @amount-of-years-update="onAmountOfYearsUpdate"
+                        @amount-of-months-update="onAmountOfMonthsUpdate"
+                    >
+                    </years-and-months>
 
-        <money-field
-            title="Initial balance"
-            :currency="selectedCurrency"
-            :amount="initialBalance"
-            @amount-update="onInitialBalanceUpdate"
-            class="col-span-4 mt-10"
-        ></money-field>
+                    <compound-frequency
+                        @compound-frequency-update="onCompoundFrequencyUpdate"
+                        class="col-span-3 mt-2"></compound-frequency>
 
+                </div>
 
-        <interest-rate
-            class="col-span-4 mt-2"
-            @interest-rate-update="onInterestRateUpdate"
-        ></interest-rate>
+                <div>
+                    <deposits-and-withdrawals
+                        @deposit-amount-update="onDepositAmountUpdate"
+                        @deposit-frequency-update="onDepositFrequencyUpdate"
+                        class="col-span-3 mt-5"
+                    ></deposits-and-withdrawals>
+                </div>
 
-        <years-and-months
-            class="col-span-3 mt-2"
-            @amount-of-years-update="onAmountOfYearsUpdate"
-            @amount-of-months-update="onAmountOfMonthsUpdate"
-        >
-        </years-and-months>
+                <div>
+                    <input-field-leading-add-on label="Total money" type="text" name="money" id="money" :add-on="selectedCurrency" :value="totalMoney"></input-field-leading-add-on>
+                </div>
+            </div>
 
-        <compound-frequency
-            @compound-frequency-update="onCompoundFrequencyUpdate"
-            class="mb-2 col-span-3 mt-2"></compound-frequency>
+            <div class="pt-5 pb-5">
+                <div class="flex justify-end">
+                    <button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">Reset</button>
+                    <button @click="calculateTotalMoney()" type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-wet-asphalt focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">Calculate</button>
+                </div>
+            </div>
+        </div>
 
-        <deposits-and-withdrawals
-            @deposit-amount-update="onDepositAmountUpdate"
-            @deposit-frequency-update="onDepositFrequencyUpdate"
-            class="col-span-3"
-        ></deposits-and-withdrawals>
-
-        <button
-            class="col-span-4 w-full bg-primary rounded-lg mt-5 mb-5 text-white"
-            @click="calculateTotalMoney()"
-        >
-            Calculate
-        </button>
-
-        <money-field
-            class="col-span-4 mb-2"
-            :amount="totalMoney"
-            title="Total money"
-            :currency="selectedCurrency"
-        ></money-field>
-
-        <money-field
-            class="col-span-4 mb-2"
-            :amount="investedMoney"
-            title="Invested money"
-            :currency="selectedCurrency"
-        ></money-field>
-
-        <money-field
-            class="col-span-4 "
-            :amount="interestEarned"
-            title="Interest earned"
-            :currency="selectedCurrency"
-        ></money-field>
 
     </div>
 </template>

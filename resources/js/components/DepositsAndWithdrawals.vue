@@ -1,12 +1,9 @@
 <template>
     <div class="flex flex-col">
         <div class="flex flex-col">
-            <label
-                class="font-bold text-sm"
-                for="deposit_amount">
-                Deposits
-            </label>
+
             <input-field
+                label="Deposits"
                 required="false"
                 type="text"
                 @input-update="handleDepositAmountUpdate"
@@ -15,8 +12,8 @@
             </input-field>
         </div>
         <div class="flex flex-col mt-2">
-            <label for="months" class="font-bold text-sm">Deposit frequency</label>
             <input-field
+                label="Deposit frequency"
                 type="select"
                 :select-values="['Yearly', 'Quarterly', 'Monthly', 'Daily']"
                 @input-update="handleDepositFrequencyUpdate"
