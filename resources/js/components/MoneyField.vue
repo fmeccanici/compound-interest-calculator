@@ -12,8 +12,8 @@ export default {
     },
     props: ['currency', 'title', 'amount'],
     methods: {
-        handleAmountUpdate() {
-            this.$emit('amount-update', this.amount)
+        handleAmountUpdate(event) {
+            this.$emit('amount-update', event.target.value)
         }
     }
 }

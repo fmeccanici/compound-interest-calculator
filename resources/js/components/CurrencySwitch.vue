@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col">
         <label
-            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm mb-2"
+            class="block text-sm font-medium text-gray-700 mb-2"
             for="currencies"
         >
             Currency

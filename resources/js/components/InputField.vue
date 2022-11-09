@@ -1,5 +1,5 @@
 <template>
-    <div v-if="type !== 'select'" class="mt-2">
+    <div v-if="type !== 'select'">
         <label :for="name" class="block text-sm font-medium text-gray-700">{{ label }}</label>
         <div class="mt-1">
             <input
@@ -17,7 +17,7 @@
     <div v-if="type === 'select'" class="mt-2">
         <label :for="name" class="block text-sm font-medium text-gray-700">{{ label }}</label>
         <select
-            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm mt-1"
             @input="handleSelectInputUpdate"
         >
 

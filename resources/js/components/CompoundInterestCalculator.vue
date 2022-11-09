@@ -3,9 +3,8 @@
 
         <div class="space-y-8 divide-y divide-gray-200">
             <div class="space-y-8 divide-y divide-gray-200">
-                <div>
+                <div class="space-y-5">
                     <currency-switch
-                        class="col-span-4 mb-3"
                         :currencies="['€', '$', '£']"
                         @selected-currency-update="onSelectedCurrencyUpdate"
                     ></currency-switch>
@@ -20,7 +19,7 @@
                         @interest-rate-update="onInterestRateUpdate"
                     ></interest-rate>
                     <years-and-months
-                        class="col-span-3 mt-2"
+                        class="col-span-3"
                         @amount-of-years-update="onAmountOfYearsUpdate"
                         @amount-of-months-update="onAmountOfMonthsUpdate"
                     >
@@ -28,27 +27,48 @@
 
                     <compound-frequency
                         @compound-frequency-update="onCompoundFrequencyUpdate"
-                        class="col-span-3 mt-2"></compound-frequency>
+                        class="col-span-3"></compound-frequency>
 
                 </div>
 
                 <div>
                     <deposits-and-withdrawals
+                        @use-deposits="onUseDepositsUpdate"
                         @deposit-amount-update="onDepositAmountUpdate"
                         @deposit-frequency-update="onDepositFrequencyUpdate"
                         class="col-span-3 mt-5"
                     ></deposits-and-withdrawals>
                 </div>
 
-                <div>
-                    <input-field-leading-add-on label="Total money" type="text" name="money" id="money" :add-on="selectedCurrency" :value="totalMoney"></input-field-leading-add-on>
+                <div class="flex md:flex-row md:space-x-10 flex-col items-left space-y-5 pt-7">
+                    <output-field-leading-add-on
+                        label="Total earned money"
+                        id="money"
+                        :add-on="selectedCurrency"
+                        :show-output="calculateClicked"
+                        :value="totalMoney"
+                    ></output-field-leading-add-on>
+                    <output-field-leading-add-on
+                        label="Invested money"
+                        id="money"
+                        :add-on="selectedCurrency"
+                        :show-output="calculateClicked"
+                        :value="investedMoney"
+                    ></output-field-leading-add-on>
+                    <output-field-leading-add-on
+                        label="Interest earned"
+                        id="money"
+                        :add-on="selectedCurrency"
+                        :show-output="calculateClicked"
+                        :value="interestEarned"
+                    ></output-field-leading-add-on>
                 </div>
             </div>
 
             <div class="pt-5 pb-5">
                 <div class="flex justify-end">
-                    <button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">Reset</button>
-                    <button @click="calculateTotalMoney()" type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-wet-asphalt focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">Calculate</button>
+                    <button @click="handleResetClicked()" type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">Reset</button>
+                    <button @click="handleCalculateClick()" type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-wet-asphalt focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">Calculate</button>
                 </div>
             </div>
         </div>
@@ -77,10 +97,23 @@ export default {
             totalMoney: null,
             depositAmount : null,
             depositFrequency : 'yearly',
-            selectedCurrency : '€'
+            selectedCurrency : '€',
+            calculateClicked : false,
+            investedMoney : null,
+            interestEarned : null,
+            useDeposits : false
         }
     },
     methods: {
+        handleCalculateClick() {
+            this.calculateClicked = true;
+            this.calculateTotalMoney();
+            this.calculateInvestedMoney();
+            this.calculateInterestEarned();
+        },
+        handleResetClicked() {
+            this.calculateClicked = false;
+        },
         calculateTotalMoney() {
             // Formulae from https://www.wallstreetiswaiting.com/running-the-numbers-1/calculating-interest-recurring-payments/
             let interestRate = this.interestRateInPercentages / 100;
@@ -130,6 +163,26 @@ export default {
         onDepositFrequencyUpdate(depositFrequency)
         {
             this.depositFrequency = depositFrequency;
+        },
+        calculateInvestedMoney() {
+            if (this.withDeposits)
+            {
+                this.investedMoney = Math.round((this.initialBalance + this.totalAmountOfDepositsPerYear * this.amountOfYears) * 100) / 100;
+            } else {
+                this.investedMoney = Math.round(this.initialBalance * 100) / 100;
+            }
+        },
+        calculateInterestEarned() {
+            if (this.totalMoney)
+            {
+                this.interestEarned = Math.round((this.totalMoney - this.investedMoney) * 100) / 100;
+            } else {
+                this.interestEarned = null;
+            }
+        },
+        onUseDepositsUpdate(useDeposits)
+        {
+            this.useDeposits = useDeposits;
         }
     },
     computed: {
@@ -167,24 +220,8 @@ export default {
             }
         },
         withDeposits() {
-            return this.depositFrequency !== null && this.depositAmount !== null;
+            return this.useDeposits && this.depositFrequency !== null && this.depositAmount !== null ;
         },
-        investedMoney() {
-            if (this.withDeposits)
-            {
-                return this.initialBalance + this.totalAmountOfDepositsPerYear * this.amountOfYears
-            }
-
-            return this.initialBalance;
-        },
-        interestEarned() {
-            if (this.totalMoney)
-            {
-                return this.totalMoney - this.investedMoney;
-            }
-
-            return null;
-        }
     }
 
 }
