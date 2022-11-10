@@ -6,21 +6,49 @@
                 :type="type"
                 :name="name"
                 :id="id"
-                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
-                :placeholder="placeholder"
                 v-model="value"
                 @input="handleInputUpdate"
-            >
+                class="
+                    form-control
+                    block
+                    w-full
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none focus:ring-primary
+                  "
+            />
         </div>
     </div>
 
     <div v-if="type === 'select'" class="mt-2">
         <label :for="name" class="block text-sm font-medium text-gray-700">{{ label }}</label>
         <select
-            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm mt-1"
+            :name="name"
             @input="handleSelectInputUpdate"
-        >
-
+            class="form-select appearance-none
+                          block
+                          w-full
+                          px-3
+                          py-1.5
+                          text-base
+                          font-normal
+                          text-gray-700
+                          bg-white bg-clip-padding bg-no-repeat
+                          border border-solid border-gray-300
+                          rounded
+                          transition
+                          ease-in-out
+                          m-0
+                          focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none focus:ring-primary" aria-label="Default select example">
             <option v-for="selectValue in selectValues" :value="selectValue.toLowerCase()"> {{ selectValue }}</option>
         </select>
     </div>

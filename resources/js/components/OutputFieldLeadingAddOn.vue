@@ -10,7 +10,21 @@
             </div>
             <p
                 :id="id"
-                class="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-primary focus:ring-primary sm:text-sm mt-1"
+                class="form-control
+                    block
+                    w-full
+                    pl-7
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none focus:ring-primary"
                 v-text="value"
                 @input="handleInputUpdate"
             ></p>

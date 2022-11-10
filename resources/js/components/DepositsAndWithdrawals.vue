@@ -4,22 +4,23 @@
             class="flex items-center"
             :class="{ 'mb-6' : showDeposits, 'mb-2' : ! showDeposits }"
         >
-
-            <button @click="toggleShowDeposits"
-                    type="button"
-                    :class="{ 'bg-primary' : showDeposits, 'bg-gray-200' : ! showDeposits }"
-                    class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                    role="switch"
-                    aria-checked="false"
-                    aria-labelledby="annual-billing-label">
-                <span aria-hidden="true"
-                    :class="{ 'translate-x-5' : showDeposits, 'translate-x-0' : ! showDeposits }"
-                    class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                ></span>
-            </button>
-            <span class="ml-3" id="annual-billing-label">
-            <span class="text-sm font-medium text-gray-900">Deposits</span>
-          </span>
+            <label @input="toggleShowDeposits" for="toggleDeposits" class="flex items-center cursor-pointer">
+                <!-- toggle -->
+                <div class="relative">
+                    <input type="checkbox" id="toggleDeposits" class="sr-only">
+                    <!-- line -->
+                    <div :class="{ 'bg-primary' : showDeposits, 'bg-gray-200' : ! showDeposits }"
+                         class="block w-12 h-7 rounded-full"></div>
+                    <!-- dot -->
+                    <div
+                        :class="{ 'translate-x-5' : showDeposits, 'translate-x-0' : ! showDeposits }"
+                        class="dot absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition"></div>
+                </div>
+                <!-- label -->
+                <div class="ml-3 text-sm">
+                    Deposits
+                </div>
+            </label>
         </div>
 
         <div v-show="showDeposits" class="flex flex-col">
@@ -40,6 +41,7 @@
                 @input-update="handleDepositFrequencyUpdate"
             ></input-field>
         </div>
+
     </div>
 </template>
 

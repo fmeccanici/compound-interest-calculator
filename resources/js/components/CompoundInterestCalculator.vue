@@ -40,7 +40,7 @@
                     ></deposits-and-withdrawals>
                 </div>
 
-                <div class="flex md:flex-row md:space-x-10 flex-col items-left space-y-5 pt-7">
+                <div class="flex md:flex-row md:space-x-10 flex-col items-left space-y-5 md:space-y-0  pt-7">
                     <output-field-leading-add-on
                         label="Total earned money"
                         id="money"
@@ -67,8 +67,8 @@
 
             <div class="pt-5 pb-5">
                 <div class="flex justify-end">
-                    <button @click="handleResetClicked()" type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">Reset</button>
-                    <button @click="handleCalculateClick()" type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-wet-asphalt focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">Calculate</button>
+                    <button @click="handleResetClicked()" type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">Reset</button>
+                    <button @click="handleCalculateClick()" type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-wet-asphalt focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">Calculate</button>
                 </div>
             </div>
         </div>

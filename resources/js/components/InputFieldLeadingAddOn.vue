@@ -9,12 +9,29 @@
                 :type="type"
                 :name="name"
                 :id="id"
-                class="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-primary focus:ring-primary sm:text-sm"
                 :class="class"
                 :placeholder="placeholder"
                 v-model="value"
                 @input="handleInputUpdate"
-            >
+                class="
+                    form-control
+                    block
+                    w-full
+                    pl-7
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none focus:ring-primary
+                  "
+            />
         </div>
     </div>
 
